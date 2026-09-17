@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es" class="ds2">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+        <title>Red en Movimiento - Un día de trenes en el AMBA | QuéTren</title>
+        <meta
+            name="description"
+            content="Todos los trenes programados del AMBA en movimiento a lo largo de un día completo, sobre las vías reales."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://quetren.com/red-en-movimiento" />
+        <meta property="og:title" content="Red en Movimiento - Un día de trenes en el AMBA | QuéTren" />
+        <meta
+            property="og:description"
+            content="Todos los trenes programados del AMBA en movimiento a lo largo de un día completo, sobre las vías reales."
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Red en Movimiento - Un día de trenes en el AMBA | QuéTren" />
+        <meta
+            name="twitter:description"
+            content="Todos los trenes programados del AMBA en movimiento a lo largo de un día completo, sobre las vías reales."
+        />
+        <meta name="twitter:image" content="https://quetren.com/images/og-red-en-movimiento.png" />
+        <meta property="og:image" content="https://quetren.com/images/og-red-en-movimiento.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+        <link id="canonical" rel="canonical" href="https://quetren.com/red-en-movimiento" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="QuéTren" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#0077C8" />
+        <link rel="preload" href="/fonts/general-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/fonts/general-sans-500.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/fonts/general-sans-600.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="stylesheet" href="/styles.css" />
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "QuéTren",
+                        "item": "https://quetren.com"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Red en Movimiento",
+                        "item": "https://quetren.com/red-en-movimiento"
+                    }
+                ]
+            }
+        </script>
+        <script>
+            !(function () {
+                const e = localStorage.getItem("theme"),
+                    t = window.matchMedia("(prefers-color-scheme: dark)").matches,
+                    o = e || (t ? "dark" : "light");
+                document.documentElement.setAttribute("data-theme", o);
+                const c = "dark" === o ? "#0f1419" : "#0077C8";
+                document.querySelector('meta[name="theme-color"]').setAttribute("content", c);
+            })();
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="header-top">
+                    <div class="header-branding">
+                        <h1>
+                            <a href="/" class="header-link" aria-label="QuéTren - Inicio"
+                                ><img
+                                    src="/favicon.svg"
+                                    alt=""
+                                    width="32"
+                                    height="32"
+                                    aria-hidden="true"
+                                    class="train-icon"
+                                />
+                                <span class="header-brand-text">QuéTren</span></a
+                            >
+                        </h1>
+                    </div>
+                    <div id="search-container" class="search-container">
+                        <input
+                            type="search"
+                            id="search-input"
+                            class="search-input"
+                            placeholder="Buscar estación, viaje, línea o ramal..."
+                            aria-label="Buscar estación, viaje, línea o ramal"
+                            autocomplete="off"
+                        />
+                        <div id="search-dropdown" class="search-dropdown"></div>
+                    </div>
+                    <div class="header-controls">
+                        <a href="/mis-favoritos" class="header-favoritos-link" aria-label="Favoritos"
+                            ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="btn-icon"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="m12 2 3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2Z"
+                                />
+                            </svg>
+                            <span class="btn-text">Favoritos</span></a
+                        >
+                        <div class="header-clock"><span id="clock">--:--:--</span></div>
+                        <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+                            <svg
+                                class="theme-icon-light"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <circle cx="12" cy="12" r="4" />
+                                <path d="M12 2v2" />
+                                <path d="M12 20v2" />
+                                <path d="m4.93 4.93 1.41 1.41" />
+                                <path d="m17.66 17.66 1.41 1.41" />
+                                <path d="M2 12h2" />
+                                <path d="M20 12h2" />
+                                <path d="m6.34 17.66-1.41 1.41" />
+                                <path d="m19.07 4.93-1.41 1.41" />
+                            </svg>
+                            <svg
+                                class="theme-icon-dark"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <nav class="breadcrumb">
+                    <a href="/">Inicio</a> <span class="separator">›</span> <span>Red en Movimiento</span>
+                </nav>
+            </div>
+        </header>
+        <div class="ds2-brand-stripe" aria-hidden="true">
+            <span></span><span></span><span></span><span></span> <span></span><span></span><span></span><span></span>
+        </div>
+        <main class="rem-page" id="main">
+            <div class="rem-intro">
+                <p class="ds2-eyebrow"><span class="ds2-diamond" aria-hidden="true"></span>Red en movimiento</p>
+                <h1 class="rem-title">Un día de trenes en el AMBA</h1>
+                <p class="rem-subhead">Cada punto es un tren programado.</p>
+            </div>
+            <div class="rem-stage" id="rem-stage">
+                <canvas
+                    id="rem-canvas"
+                    role="img"
+                    aria-label="Mapa animado de los trenes programados del AMBA"
+                ></canvas>
+                <div class="rem-readout">
+                    <span class="rem-clock" id="rem-clock">00:00</span>
+                    <div class="rem-spark" aria-hidden="true">
+                        <svg class="rem-spark-svg" viewBox="0 0 120 100" preserveAspectRatio="none" focusable="false">
+                            <path class="rem-spark-line" id="rem-spark-line" d=""></path>
+                        </svg>
+                        <span class="rem-spark-dot" id="rem-spark-dot"></span>
+                        <span class="rem-spark-value" id="rem-count">0</span>
+                    </div>
+                    <p class="rem-message" id="rem-message" aria-live="polite"></p>
+                </div>
+                <button
+                    type="button"
+                    id="rem-services-toggle"
+                    class="rem-services-toggle"
+                    aria-expanded="false"
+                    aria-controls="rem-services-panel"
+                    hidden
+                >
+                    Servicios<span id="rem-services-count" class="rem-services-count" hidden>0</span>
+                </button>
+                <aside id="rem-services-panel" class="rem-services" role="region" aria-label="Servicios seleccionados" hidden>
+                    <ul id="rem-services-list" class="rem-services-list"></ul>
+                    <p class="rem-services-empty" id="rem-services-empty">
+                        Tocá un tren en el mapa para ver el horario completo de su servicio.
+                    </p>
+                </aside>
+                <div id="rem-announcer" class="sr-only" role="status" aria-live="polite"></div>
+            </div>
+            <p class="rem-note">
+                Basado en los horarios programados vigentes. No muestra la posición real de los trenes.
+            </p>
+            <div class="rem-controls" id="rem-controls">
+                <div class="rem-transport">
+                    <button type="button" id="rem-play" class="rem-button" aria-pressed="false">Reproducir</button>
+                    <button type="button" id="rem-sound" class="rem-button rem-button-toggle" aria-pressed="false">
+                        Sonido
+                    </button>
+                    <label class="rem-scrub-label" for="rem-scrub">Hora del día</label>
+                    <input
+                        type="range"
+                        id="rem-scrub"
+                        class="rem-scrub"
+                        min="0"
+                        max="1439"
+                        step="1"
+                        value="0"
+                        aria-label="Hora del día"
+                    />
+                </div>
+                <fieldset class="rem-fieldset">
+                    <legend>Tipo de día</legend>
+                    <div class="rem-chips" id="rem-daytypes">
+                        <button type="button" class="rem-chip" data-day-type="habil" aria-pressed="true">
+                            Día hábil
+                        </button>
+                        <button type="button" class="rem-chip" data-day-type="sabado" aria-pressed="false">
+                            Sábado
+                        </button>
+                        <button type="button" class="rem-chip" data-day-type="domingo" aria-pressed="false">
+                            Domingo y feriados
+                        </button>
+                    </div>
+                </fieldset>
+                <fieldset class="rem-fieldset">
+                    <legend>Líneas</legend>
+                    <div class="rem-chips" id="rem-lineas"></div>
+                </fieldset>
+            </div>
+        </main>
+        <footer class="site-footer">
+            <div class="container">
+                <div class="attribution">
+                    <p>Datos basados en los horarios programados vigentes.</p>
+                    <p class="disclaimer">
+                        Los horarios mostrados son referenciales y pueden cambiar sin previo aviso.
+                    </p>
+                    <p class="disclaimer disclaimer-unofficial">
+                        QuéTren <strong>NO</strong> es una aplicación oficial de Trenes Argentinos.
+                    </p>
+                </div>
+                <div class="footer-meta"></div>
+            </div>
+        </footer>
+        <script src="/js/config.js" defer="defer"></script>
+        <script src="/js/search.js" defer="defer"></script>
+        <script src="/js/common.js" defer="defer"></script>
+        <script src="/js/red-en-movimiento-core.js" defer="defer"></script>
+        <script src="/js/red-en-movimiento-sound.js" defer="defer"></script>
+        <script src="/js/red-en-movimiento.js" defer="defer"></script>
+        <nav class="bottom-nav" data-quetren-nav="true" aria-label="Navegación principal"></nav>
+        <script src="/js/bottom-nav.js" defer="defer"></script>
+        <!--
+        <script
+            type="module"
+            src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495"
+            integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg=="
+            data-cf-beacon='{"version":"2024.11.0","token":"ec0db4a405b448e58f70f38b58921591","r":1,"spa":2}'
+            crossorigin="anonymous" 
+        >
+        -->
+        </script>
+    </body>
+</html>
