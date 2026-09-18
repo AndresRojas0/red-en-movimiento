@@ -475,7 +475,7 @@
         return (
             g[n] ||
                 (g[n] = (async function (n) {
-                    const t = await fetch("/data/animation-bundle-" + n + ".json");
+                    const t = await fetch("./data/animation-bundle-" + n + ".json");
                     if (!t.ok) throw new Error("bundle fetch failed: " + t.status);
                     return e.prepareBundle(await t.json());
                 })(n).catch(function (e) {
@@ -496,7 +496,7 @@
                 _(t),
                 o.fixedBbox ? null : _("habil"),
                 (p ||
-                    (p = fetch("/data/amba-context.geojson")
+                    (p = fetch("./data/amba-context.geojson")
                         .then(function (e) {
                             return e.ok ? e.json() : null;
                         })
