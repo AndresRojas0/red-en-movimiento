@@ -51,7 +51,8 @@
         m = 0;
     const g = {};
     let p = null,
-        f = null;
+        f = null,
+        q = null;
     const y = new Promise(function (e) {
         f = e;
     });
@@ -477,7 +478,16 @@
                 (g[n] = (async function (n) {
                     const t = await fetch("./data/animation-bundle-" + n + ".json");
                     if (!t.ok) throw new Error("bundle fetch failed: " + t.status);
-                    return e.prepareBundle(await t.json());
+                    q ||
+                        (q = (async function () {
+                            const n = await fetch("./data/red-ferroviaria.geojson");
+                            if (!n.ok) throw new Error("network fetch failed: " + n.status);
+                            return e.prepareNetwork(await n.json());
+                        })()),
+                        q.catch(function () {
+                            q = null;
+                        });
+                    return e.prepareBundle(await q, await t.json());
                 })(n).catch(function (e) {
                     throw (delete g[n], e);
                 })),
@@ -508,7 +518,7 @@
             (r = n[0]),
                 n[1] &&
                     !o.fixedBbox &&
-                    ((o.fixedBbox = n[1].bbox),
+                    ((o.fixedBbox = r.bbox),
                     (l = n[1]),
                     (s = e.countsByMinute(n[1])),
                     (o.sparkMax = (function (n) {

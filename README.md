@@ -39,6 +39,7 @@ npx serve .
 
 ## Datos
 
-- Los horarios provienen de los cuadros programados vigentes y se agrupan en tres bundles (`data/animation-bundle-{habil,sabado,domingo}.json`) con la geometría de vías, las estaciones y los tiempos de paso de cada servicio.
+- La infraestructura (traza de vías, estaciones y sus posiciones sobre cada ramal) vive en un único archivo: `data/red-ferroviaria.geojson`, en formato GeoJSON estándar (editable con herramientas GIS, convertible a/desde KML).
+- Los horarios provienen de los cuadros programados vigentes y se agrupan en tres bundles (`data/animation-bundle-{habil,sabado,domingo}.json`) que contienen solo lo operativo: qué ramales usa cada tipo de día (por `slug`) y los tiempos de paso de cada servicio.
 - La aplicación es 100% estática: HTML, CSS y JavaScript vanilla sin dependencias ni proceso de build.
 - No es una aplicación oficial de Trenes Argentinos. Los horarios son referenciales y pueden cambiar sin previo aviso.

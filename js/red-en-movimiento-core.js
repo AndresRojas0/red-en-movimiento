@@ -49,18 +49,43 @@
     }
     t.QuetrenAnimCore = {
         MINUTES_PER_DAY: n,
-        prepareBundle: function (t) {
-            const n = t.quantum,
-                e = t.ramales.map(function (t) {
-                    const e = t.points.length / 2,
-                        a = new Float64Array(t.points.length);
-                    for (let e = 0; e < t.points.length; e++) a[e] = t.points[e] * n;
-                    const o = new Float64Array(e);
-                    for (let t = 1; t < e; t++)
-                        o[t] = o[t - 1] + i(a[2 * (t - 1)], a[2 * (t - 1) + 1], a[2 * t], a[2 * t + 1]);
-                    return Object.assign({}, t, { lonlat: a, cum: o });
+        prepareNetwork: function (t) {
+            const a = {};
+            let o = t.bbox && 4 === t.bbox.length ? t.bbox : null,
+                r = Infinity,
+                s = Infinity,
+                l = -Infinity,
+                u = -Infinity;
+            for (let n = 0; n < t.features.length; n++) {
+                const c = t.features[n],
+                    d = c.properties || {},
+                    m = c.geometry && c.geometry.coordinates;
+                if (!m || m.length < 2) continue;
+                const g = new Float64Array(2 * m.length),
+                    p = new Float64Array(m.length);
+                let f = 0;
+                for (let e = 0; e < m.length; e++) {
+                    (g[2 * e] = m[e][0]),
+                        (g[2 * e + 1] = m[e][1]),
+                        e > 0 && (f += i(g[2 * e - 2], g[2 * e - 1], g[2 * e], g[2 * e + 1])),
+                        (p[e] = f),
+                        (r = Math.min(r, g[2 * e])),
+                        (s = Math.min(s, g[2 * e + 1])),
+                        (l = Math.max(l, g[2 * e])),
+                        (u = Math.max(u, g[2 * e + 1]));
+                }
+                a[d.slug] = { slug: d.slug, linea: d.linea, stations: d.stations, offsets: d.offsets, lonlat: g, cum: p };
+            }
+            return { bbox: o || [r, s, l, u], bySlug: a };
+        },
+        prepareBundle: function (t, n) {
+            const e = t.bySlug,
+                a = n.ramales.map(function (t) {
+                    const a = e[t];
+                    if (!a) throw new Error("ramal not found in network: " + t);
+                    return a;
                 });
-            return Object.assign({}, t, { ramales: e });
+            return Object.assign({}, n, { ramales: a, bbox: t.bbox });
         },
         pointAtDistance: a,
         tripPositionAt: o,
