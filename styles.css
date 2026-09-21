@@ -14398,13 +14398,80 @@ html.ds2 .rem-services {
     width: min(19rem, calc(100% - 2 * var(--space-sm)));
     display: flex;
     flex-direction: column;
-    overflow: hidden auto;
-    overscroll-behavior: contain;
+    overflow: hidden;
     background: color-mix(in srgb, var(--ds2-surface) 92%, transparent);
     border: 1px solid var(--ds2-hairline);
     border-radius: var(--ds2-radius-data);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
+}
+html.ds2 .rem-services-body {
+    min-height: 0;
+    overflow: hidden auto;
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+}
+html.ds2 .rem-services-search {
+    flex: none;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: var(--ds2-tap);
+    margin: var(--ds2-space-2xs);
+    padding: var(--ds2-space-2xs) var(--ds2-space-xs);
+    font: inherit;
+    font-size: 0.8125rem;
+    color: var(--ds2-text);
+    background: var(--ds2-surface-2);
+    border: 1px solid var(--ds2-hairline);
+    border-radius: var(--ds2-radius-button);
+}
+html.ds2 .rem-services-search:focus-visible {
+    outline: 2px solid var(--ds2-text);
+    outline-offset: -1px;
+}
+html.ds2 .rem-result {
+    display: flex;
+    align-items: center;
+    gap: var(--ds2-space-2xs);
+    width: 100%;
+    min-height: var(--ds2-tap);
+    box-sizing: border-box;
+    padding: var(--ds2-space-2xs) var(--ds2-space-xs);
+    font: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: var(--ds2-radius-button);
+    cursor: pointer;
+}
+html.ds2 .rem-result:disabled {
+    cursor: default;
+    opacity: 0.45;
+}
+html.ds2 .rem-result--on:hover {
+    background: var(--ds2-surface-2);
+}
+html.ds2 .rem-result--sel {
+    background: color-mix(in srgb, var(--rem-card-line, var(--ds2-text)) 12%, transparent);
+}
+html.ds2 .rem-result-info {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.75rem;
+    color: var(--ds2-text-strong-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+html.ds2 .rem-result--on .rem-result-info {
+    color: var(--ds2-text);
+}
+html.ds2 .rem-more {
+    padding: var(--ds2-space-2xs) var(--ds2-space-xs);
+    font-size: 0.75rem;
+    color: var(--ds2-text-strong-muted);
+    text-align: center;
 }
 html.ds2 .rem-services-empty {
     margin: 0;

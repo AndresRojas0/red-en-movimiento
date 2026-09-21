@@ -12,6 +12,7 @@ La versión de partida ya incluye las primeras piezas de esa evolución:
 | Marcas de estación | Ticks perpendiculares sobre cada línea en la posición real de cada estación. |
 | Consulta por servicio | Click/touch sobre un tren abre un panel lateral con el horario completo de ese servicio: hora de paso por cada estación donde detiene, con resaltado del tramo en el que circula, sincronizado con la barra de tiempo. |
 | Identificador de formación | Cada tren muestra un código estable (ej. `RO-14`) que se mantiene durante toda su jornada, inferido por encadenamiento de horarios (idéntico coche circulando en ambos sentidos). |
+| Búsqueda de formaciones | El panel lateral incluye un buscador: escribir un código (`MI-14`, `ro-7`) o el nombre de una línea (`Mitre`, `belgrano`) filtra las formaciones; las que circulan en el minuto actual se seleccionan con un click y el resto se muestran como fuera de servicio. |
 | Tipos de día | Cuadros de servicio independientes para día hábil, sábado y domingo/feriados. |
 
 ## Objetivo: versión aumentada

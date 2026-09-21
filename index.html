@@ -203,10 +203,20 @@
                     Servicios<span id="rem-services-count" class="rem-services-count" hidden>0</span>
                 </button>
                 <aside id="rem-services-panel" class="rem-services" role="region" aria-label="Servicios seleccionados" hidden>
-                    <ul id="rem-services-list" class="rem-services-list"></ul>
-                    <p class="rem-services-empty" id="rem-services-empty">
-                        Tocá un tren en el mapa para ver el horario completo de su servicio.
-                    </p>
+                    <input
+                        type="search"
+                        id="rem-services-search"
+                        class="rem-services-search"
+                        placeholder="Buscar formación o línea…"
+                        aria-label="Buscar formación por código o línea"
+                        autocomplete="off"
+                    />
+                    <div class="rem-services-body">
+                        <ul id="rem-services-list" class="rem-services-list"></ul>
+                        <p class="rem-services-empty" id="rem-services-empty">
+                            Tocá un tren en el mapa para ver el horario completo de su servicio.
+                        </p>
+                    </div>
                 </aside>
                 <div id="rem-announcer" class="sr-only" role="status" aria-live="polite"></div>
             </div>

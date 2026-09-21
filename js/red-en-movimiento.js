@@ -41,6 +41,8 @@
             selected: [],
             chains: null,
             tripCode: null,
+            search: "",
+            formaciones: [],
         },
         u = {};
     let i = null,
@@ -286,15 +288,65 @@
         for (let t = 0; t + 1 < e.length; t += 2) n.push({ station: e[t], minute: e[t + 1] });
         return n;
     }
+    const En = "Tocá un tren en el mapa para ver el horario completo de su servicio.";
+    function Ln(n) {
+        const e = t.findIndex(function (t) {
+            return t.slug === n;
+        });
+        return -1 === e ? 99 : e;
+    }
     function J() {
         if (!u.servicesList) return;
         const e = o.selected.length;
         (u.servicesCount.hidden = 0 === e),
             (u.servicesCount.textContent = String(e)),
-            (u.servicesToggle.hidden = "ready" !== o.loadStatus),
-            (u.servicesEmpty.hidden = 0 !== e);
-        u.servicesList.innerHTML = o.selected
-            .map(function (n) {
+            (u.servicesToggle.hidden = "ready" !== o.loadStatus);
+        if (o.search && o.formaciones.length) {
+            const n = an(o.search),
+                a = o.formaciones
+                    .map(function (e, t) {
+                        return { f: e, n: t };
+                    })
+                    .filter(function (e) {
+                        const a = an(e.f.label);
+                        return (
+                            0 === an(e.f.code).indexOf(n) ||
+                            0 === a.indexOf(n) ||
+                            a.split(/\s+/).some(function (i) {
+                                return 0 === i.indexOf(n);
+                            })
+                        );
+                    });
+            a.sort(function (e, t) {
+                const n = Ln(e.f.linea) - Ln(t.f.linea);
+                return 0 !== n ? n : e.f.code < t.f.code ? -1 : e.f.code > t.f.code ? 1 : 0;
+            });
+            const i = a.slice(0, 10);
+            (u.servicesEmpty.hidden = 0 !== a.length),
+                (u.servicesEmpty.textContent = 'Sin resultados para "' + o.search + '".'),
+                (u.servicesList.innerHTML =
+                    i
+                        .map(function (e) {
+                            return (
+                                '<li><button type="button" class="rem-result" data-chain="' +
+                                e.n +
+                                '" style="--rem-card-line: var(' +
+                                gn(e.f.linea) +
+                                ')"><span class="rem-card-dot" aria-hidden="true"></span><span class="rem-card-code">' +
+                                U(e.f.code) +
+                                '</span><span class="rem-result-info"></span></button></li>'
+                            );
+                        })
+                        .join("") +
+                    (a.length > 10
+                        ? '<li class="rem-more">+' + (a.length - 10) + " formaciones</li>"
+                        : "")),
+                ln(!0);
+        } else
+            (u.servicesEmpty.hidden = 0 === e),
+                (u.servicesEmpty.textContent = En),
+                (u.servicesList.innerHTML = o.selected
+                    .map(function (n) {
                 const r = o.prepared.trips[n],
                     a = o.prepared.ramales[r[0]],
                     i = z(r[2]),
@@ -337,11 +389,11 @@
                     '<li class="rem-now" aria-hidden="true" hidden></li></ol></li>'
                 );
             })
-            .join("");
+            .join(""));
         Q();
     }
     function Q() {
-        if (!u.servicesList || u.servicesPanel.hidden || !o.selected.length || "ready" !== o.loadStatus) return;
+        if (!u.servicesList || u.servicesPanel.hidden || "ready" !== o.loadStatus) return;
         const n = o.minute;
         u.servicesList.querySelectorAll(".rem-card").forEach(function (t) {
             const a = o.prepared.trips[+t.dataset.trip];
@@ -383,6 +435,7 @@
                 (s.hidden = !1), (s.style.top = o + "px");
             } else s.hidden = !0;
         });
+        ln(!1);
     }
     function X(n) {
         const t = o.selected.indexOf(n);
@@ -393,6 +446,55 @@
               u.servicesToggle.setAttribute("aria-expanded", "true")),
             J();
     }
+    function an(n) {
+        return String(n)
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+    }
+    function gn(n) {
+        const e = t.find(function (t) {
+            return t.slug === n;
+        });
+        return e ? e.varName : "";
+    }
+    function cn(n) {
+        const e = o.formaciones[n];
+        if (!e || "ready" !== o.loadStatus) return -1;
+        for (let t = 0; t < e.trips.length; t++) {
+            const a = o.prepared.trips[e.trips[t]][2],
+                i = a[1],
+                r = a[a.length - 1];
+            if ((o.minute >= i && o.minute <= r) || (o.minute + 1440 >= i && o.minute + 1440 <= r)) return e.trips[t];
+        }
+        return -1;
+    }
+    function dn(n) {
+        const e = o.prepared.trips[n],
+            t = z(e[2]),
+            a = o.prepared.ramales[e[0]];
+        return a.stations[t[0].station] + " → " + a.stations[t[t.length - 1].station];
+    }
+    function ln(n) {
+        if (!u.servicesList) return;
+        const t = Math.round(o.minute);
+        if (!n && t === hn) return;
+        hn = t;
+        u.servicesList.querySelectorAll(".rem-result").forEach(function (t) {
+            const a = +t.dataset.chain,
+                i = cn(a),
+                r = -1 !== i;
+            (t.disabled = !r),
+                t.classList.toggle("rem-result--on", r),
+                t.classList.toggle("rem-result--sel", r && o.selected.includes(i)),
+                (t.querySelector(".rem-result-info").textContent = r ? "Ahora: " + dn(i) : "Fuera de servicio");
+        });
+    }
+    function mn(n) {
+        const t = cn(n);
+        -1 !== t && !o.selected.includes(t) && X(t);
+    }
+    let hn = -1;
     function Y(n) {
         const a = Array(n.trips.length).fill(""),
             i = {};
@@ -416,6 +518,13 @@
             });
         }
         o.tripCode = a;
+        o.formaciones = o.chains.chains.map(function (e) {
+            const n =
+                t.find(function (t) {
+                    return t.slug === e.linea;
+                }) || null;
+            return { n: o.chains.chains.indexOf(e), code: e.code, linea: e.linea, label: n ? n.label : e.linea, trips: e.trips };
+        });
     }
     function I(n) {
         if (o.playing) {
@@ -555,6 +664,8 @@
                     (o.chains = e.buildChains(t)),
                     Y(t),
                     (o.selected = []),
+                    (o.search = ""),
+                    u.servicesSearch && (u.servicesSearch.value = ""),
                     J(),
                     u.dayTypes.querySelectorAll("[data-day-type]").forEach(function (e) {
                         e.setAttribute("aria-pressed", e.dataset.dayType === n ? "true" : "false");
@@ -602,11 +713,16 @@
                     e && J();
             }),
             u.servicesList.addEventListener("click", function (e) {
+                const t = e.target.closest(".rem-result");
+                if (t) return void (t.disabled || mn(+t.dataset.chain));
                 const n = e.target.closest(".rem-card-close");
                 if (!n) return;
-                const t = +n.closest(".rem-card").dataset.trip,
-                    a = o.selected.indexOf(t);
-                -1 !== a && (o.selected.splice(a, 1), J());
+                const a = +n.closest(".rem-card").dataset.trip,
+                    i = o.selected.indexOf(a);
+                -1 !== i && (o.selected.splice(i, 1), J());
+            }),
+            u.servicesSearch.addEventListener("input", function () {
+                (o.search = u.servicesSearch.value.trim()), J();
             }),
             u.scrub.addEventListener("input", function () {
                 (o.autoplayPending = !1), (o.scrubbing = !0), R() && (o.pausedByScrub = !0), k(u.scrub.value), v();
@@ -657,6 +773,7 @@
             (u.servicesList = document.getElementById("rem-services-list")),
             (u.servicesCount = document.getElementById("rem-services-count")),
             (u.servicesEmpty = document.getElementById("rem-services-empty")),
+            (u.servicesSearch = document.getElementById("rem-services-search")),
             !u.canvas)
         )
             return Promise.resolve();
